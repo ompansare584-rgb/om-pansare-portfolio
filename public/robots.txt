@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://om-pansare-portfolio.vercel.app/sitemap.xml
