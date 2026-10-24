@@ -1,16 +1,21 @@
+import { lazy, Suspense } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight, Github, Linkedin, Mail, Code2 } from 'lucide-react'
 import { person, links, projects, skills } from '../data/site'
 import ProjectCard from '../components/ProjectCard'
 import Empty from '../components/Empty'
 import { useTitle } from '../hooks/useTitle'
+import { useTilt } from '../hooks/useTilt'
+const Scene3D = lazy(() => import('../components/Scene3D'))
 const icons: Record<string, JSX.Element> = { GitHub: <Github size={18} />, LinkedIn: <Linkedin size={18} />, LeetCode: <Code2 size={18} />, Email: <Mail size={18} /> }
 export default function Home() {
   useTitle()
+  const tilt = useTilt<HTMLElement>()
   const featured = projects.filter(p => p.featured).slice(0, 3)
   return (
     <>
       <section className="hero wrap">
+        <Suspense fallback={null}><Scene3D /></Suspense>
         <div className="hero-copy">
           <p className="kicker">{person.role}</p>
           <h1 className="display">{person.name}<span>{person.headline}</span></h1>
@@ -21,7 +26,7 @@ export default function Home() {
           </div>
           <ul className="social">{links.map(l => <li key={l.label}><a href={l.href} target={l.href.startsWith('http') ? '_blank' : undefined} rel="noreferrer" aria-label={l.label}>{icons[l.label]}<span>{l.label}</span></a></li>)}</ul>
         </div>
-        <figure className="portrait">
+        <figure className="portrait" ref={tilt}>
           <img src={`${import.meta.env.BASE_URL}${person.photo}`} alt={person.photoAlt} width={720} height={900} />
           <figcaption>{person.motto}</figcaption>
         </figure>

@@ -54,3 +54,12 @@ input,textarea{font:inherit;padding:12px 14px;border:1px solid var(--line);backg
   .timeline li{grid-template-columns:1fr;gap:4px}
 }
 @media(prefers-reduced-motion:reduce){*,::before,::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}.reveal{opacity:1;transform:none}}
+/* ---- 3D layer ---- */
+.hero{position:relative;isolation:isolate}
+.scene{position:absolute;top:0;bottom:0;left:50%;width:100vw;transform:translateX(-50%);z-index:-1;pointer-events:none;
+  -webkit-mask-image:linear-gradient(to bottom,#000 70%,transparent);mask-image:linear-gradient(to bottom,#000 70%,transparent)}
+.scene canvas{display:block}
+.portrait{transform-style:preserve-3d;will-change:transform;transition:transform .25s ease-out}
+.portrait::before{transform:translate3d(0,0,-40px)}.portrait::after{transform:translate3d(0,0,30px)}
+.portrait:hover::before{transform:translate3d(8px,8px,-40px)}.portrait:hover::after{transform:translate3d(-8px,-8px,30px)}
+@media(max-width:820px){.scene{opacity:.6}}
